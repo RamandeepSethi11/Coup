@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row" style=margin-top:20px;>
+      <div class='col-md-12 gameName'>
+      Welcome to game of Coup
+    </div>
+    </div>
+    <div class="row" style=margin-top:40px;>
+      <div class="col-xs-1 col-md-1"></div>
+      <div class="col-xs-2 col-md-2" *ngFor='let imgUrl of imageObject' style='text-align:center;'>
+      <img class='img-responsive' src='{{imgUrl.image}}' style='border-radius:10px;width:90%;height:90%'>
+    </div>
+    <div class="col-xs-1 col-md-1"></div>
+  </div>
+  <div class="row">
+      <div class='col-md-3 offset-md-1'>Enter player name to continue</div>
+      <div class="col-md-3">
+          <input type='textbox' #name class='form-control'/>
+      </div>
+  </div>
+  <div class="row" style=margin-top:40px;>
+    <div class="col-md-2 offset-md-5"><button class="btn btn-primary" type='button' (click)='authService.goToHome(name.value)'>Continue</button>
+    </div>   
+  </div>
+  </div>
