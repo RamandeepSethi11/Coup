@@ -1,10 +1,10 @@
 import { Injectable, NgZone } from '@angular/core';
 import { auth } from 'firebase/app';
-import { User } from "./user";
+import { User } from "./user.model";
 import { Router } from "@angular/router";
 import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { NameCards } from './name-cards';
+import { NameCards } from './name-cards.model';
 
 
 
@@ -62,14 +62,19 @@ SignOut() {
 //Fetch Users
 fetchUsers()
 {
-return this.http.get<number>('https://coup-9f2fe.firebaseio.com/count.json');
+return this.http.get<number>('https://coup-9f2fe.firebaseio.com/users.json');
 }
 
 //Go to home
 goToHome(name:string)
 {
-  this.http.put<NameCards>('https://coup-9f2fe.firebaseio.com/nameCards.json',name).subscribe(response=>{
-            this.router.navigate(['home']);
+  localStorage.setItem('user', JSON.stringify(name));
+  this.fetchUsers().subscribe(response=>{
+    this.count=response;
+    this.http.put<number>('https://coup-9f2fe.firebaseio.com/users.json',(this.count)+1).subscribe(response=>{
+        this.nameCards={name:name,cards:[],image:[]};
+        this.router.navigate(['home']);
+  });
 });
 }
 }
